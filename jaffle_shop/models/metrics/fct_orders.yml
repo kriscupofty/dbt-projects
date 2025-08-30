@@ -1,0 +1,76 @@
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: order_date
+    description: |
+      Order fact table, at the order grain with one row per order.
+    model: ref('fct_orders')
+    entities:
+      - name: order_id
+        type: primary
+      - name: customer
+        type: foreign
+        expr: customer_id
+    dimensions:
+      - name: order_date
+        expr: order_date
+        type: time
+        type_params:
+          time_granularity: day
+
+    measures:
+      - name: amount
+        description: The total amount for each order.
+        agg: sum
+      - name: order_count
+        expr: 1
+        agg: sum
+      - name: customers_with_orders
+        description: Distinct count of customers placing orders.
+        agg: count_distinct
+        expr: customer_id
+      - name: amount_p99
+        expr: amount
+        agg: percentile
+        agg_params:
+          percentile: 0.99
+          use_discrete_percentile: False
+          use_approximate_percentile: True
+      - name: max_amount
+        expr: amount
+        agg: max
+      - name: min_amount
+        expr: amount
+        agg: min
+
+metrics:
+#SIMPLE TYPE METRICS
+  - name: amount
+    description: Sum of orders amount
+    type: simple
+    label: amount
+    type_params:
+      measure: amount
+  - name: "amount_p99"
+    description: The 99th percentile of each order amount
+    type: simple
+    label: amount_p99
+    type_params:
+      measure: amount_p99
+#CUMULATIVE METRICS 
+  - name: cumulative_order_ammount_l1m
+    label: cumulative_order_ammount_l1m    
+    description: Trailing 1 month cumulative order amount
+    type: cumulative
+    type_params:
+      measure: amount
+      cumulative_type_params:
+        window: 1 month
+  - name: cumulative_order_amount_mtd
+    label: cumulative_order_amount_mtd
+    description: The month to date value of all orders
+    type: cumulative
+    type_params:
+      measure: amount
+      cumulative_type_params:
+        grain_to_date: month

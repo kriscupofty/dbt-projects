@@ -1,10 +1,12 @@
+import os
 from google.cloud import bigquery
 from google.api_core.exceptions import GoogleAPIError
+from dotenv import load_dotenv
 
 
-key_path = "/Users/kristys/Downloads/dbt-user-creds.json"
+load_dotenv(override=True)
 
-client = bigquery.Client.from_service_account_json(key_path)
+client = bigquery.Client.from_service_account_json(os.getenv("key_path"))
 
 def run_bigquery_query(query):
     try:
@@ -16,11 +18,3 @@ def run_bigquery_query(query):
 
     rows_as_list = [dict(row) for row in results]
     return rows_as_list
-
-# query = """
-# select *
-# from dbt_ksiu.fct_orders
-# limit 3
-# """
-
-# print(run_bigquery_query(query))
