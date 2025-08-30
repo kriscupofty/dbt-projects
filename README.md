@@ -1,3 +1,6 @@
+# Overview
+This repo intends to hold several dbt projects as well a GenAI web-based app for answering natural language questions regarding the data and display the results.
+
 # Set-up
 ```
 pip install -r requirements.txt
@@ -5,14 +8,15 @@ pip install -r requirements.txt
 Please create a `.env` file with 
 ```
 OPENAI_API_KEY=<your key>
+key_path=<GCP service account key with BigQuery permissions>
 ```
 
-Setting up the `jaffle_shop` dbt project with a dataset named `dbt_ksiu` created and populated is required for the next steps.
+Then go to each dbt project and build the datasets on BigQuery.
 
 # Launch Web App
 ```
 cd text2results_app
 mercury run
 ```
-## Example
+## Demo
 ![Screenshot](text2results_app/screenshots/1.png)

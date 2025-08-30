@@ -1,0 +1,45 @@
+semantic_models:
+  - name: customers
+    defaults:
+      agg_time_dimension: first_order_date
+    description: Customer mart table, at the customer grain.
+    model: ref('dim_customers')   # Replace with your actual mart model name
+    entities:
+      - name: customer
+        type: primary
+        expr: customer_id
+    dimensions:
+      - name: first_name
+        type: categorical
+        expr: first_name
+      - name: last_name
+        type: categorical
+        expr: last_name
+      - name: first_order_date
+        type: time
+        type_params:
+          time_granularity: day
+        expr: first_order_date
+      - name: most_recent_order_date
+        type: time
+        type_params:
+          time_granularity: day
+        expr: most_recent_order_date
+    measures:
+      - name: number_of_orders
+        description: Total number of orders per customer
+        agg: sum
+      - name: lifetime_value
+        description: Lifetime value of a customer
+        agg: sum
+      - name: customers
+        expr: customer_id
+        agg: count_distinct
+
+metrics:
+  - name: customers
+    description: Count of customers
+    type: simple
+    label: customers
+    type_params:
+      measure: customers
