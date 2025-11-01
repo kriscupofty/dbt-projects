@@ -1,6 +1,6 @@
 # Jaffle Shop dbt Project
 ## Set-up
-Create a profiles.yml file to connect to BigQuery
+Create a profiles.yml file to connect to BigQuery.
 
 ## Workflows
 - Production Job (Monday-Saturday at midnight)

@@ -7,3 +7,5 @@ Pipfile
 
 */profiles.yml
 */.user.yml
+
+.venv

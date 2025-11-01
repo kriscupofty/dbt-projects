@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: payments
+    database: my-project-1490567254672
+    schema: video_streaming_service_analytics_seed
+    tables:
+      - name: payments
+        description: raw payments data

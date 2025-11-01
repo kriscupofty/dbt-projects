@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: product
+    description: a clone of a Postgres application database.    
+    database: my-project-1490567254672
+    schema: video_streaming_service_analytics_seed
+    tables:
+      - name: accounts
+        description: raw accounts data
+      - name: app_events
+        description: raw app events data
+      - name: content
+        description: raw content data
+      - name: subscription_events
+        description: raw subscription events data
+      - name: sessions
+        description: raw sessions data
