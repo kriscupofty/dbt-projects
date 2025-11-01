@@ -13,10 +13,17 @@ key_path=<GCP service account key with BigQuery permissions>
 
 Then go to each dbt project and build the datasets on BigQuery.
 
+# Model Lineage Graphs
+
+## jaffle_shop
+![Lineage](screenshots/model_lineage_1.jpg)
+## subscription_video_streaming_service
+![Lineage](screenshots/model_lineage_2.jpg)
+
 # Launch Web App
 ```
 cd text2results_app
 mercury run
 ```
 ## Demo
-![Screenshot](text2results_app/screenshots/1.png)
+![Screenshot](text2results/screenshots/1.png)

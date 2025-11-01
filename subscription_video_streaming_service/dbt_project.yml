@@ -1,0 +1,87 @@
+
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'subscription_video_streaming_service'
+version: '1.0.0'
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'subscription_video_streaming_service'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  +schema: seed
+  subscription_video_streaming_service:
+    accounts:
+      +column_types:
+        account_id: STRING
+        subaccount_id: STRING
+        creation_ts: TIMESTAMP
+    subscription_events:
+      +column_types:
+        event_id: INTEGER
+        account_id: STRING
+        timestamp: TIMESTAMP
+        event: STRING
+        tier: STRING
+    payments:
+      +column_types:
+        id: INTEGER
+        event_id: INTEGER
+        account_id: STRING
+        currency: STRING
+        amount: NUMERIC
+        status: STRING
+        created_at: TIMESTAMP
+    content:
+      +column_types:
+        id: STRING
+        locale: STRING
+        content_type: STRING
+    app_events:
+      +column_types:
+        subaccount_id: STRING
+        timestamp: TIMESTAMP
+        session_id: STRING
+        device_id: STRING
+        country: STRING
+        event_name: STRING
+        properties: JSON  
+    sessions:
+     +column_types:
+        id: STRING        
+        subaccount_id: STRING
+        started_at: TIMESTAMP
+        ended_at: TIMESTAMP
+
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/
+# directory as views. These settings can be overridden in the individual model
+# files using the `{{ config(...) }}` macro.
+models:
+  subscription_video_streaming_service:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+    intermediate:
+      +materialized: table
+    metrics:
+      +materialized: table   
